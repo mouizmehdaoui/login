@@ -1,0 +1,58 @@
+body{
+background-image: url(red-abstract-ut0gkpj0c6meywdh.jpg);  
+height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;  /* توسيط أفقي */
+  align-items: center;      /* توسيط عمودي */
+  
+}
+
+div{
+  width: 400px;
+  height: 400px;
+  margin-top: 120px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.1);  /* شفافية */
+  backdrop-filter: blur(10px);           /* ضبابية */
+  -webkit-backdrop-filter: blur(10px);   /* لسفاري */
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  text-align: center;
+}
+div input{
+    width: 70%;               /* يخلي الخانة تدي العرض كامل */
+  padding: 10px;             /* مسافة داخلية */
+  margin-bottom: 15px;       /* مسافة بين الخانات */
+  border: none;
+  border-radius: 50px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 16px;
+  outline: none;
+  backdrop-filter: blur(5px);
+}
+.id input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+.card{
+    margin-top: 100px;
+    text-align: center;
+}
+.card button {
+  width: 45%;
+  padding: 10px;
+  background: crimson;
+  border: none;
+  border-radius: 50px;
+  margin-top: 40px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.card button:hover {
+  background: darkred;
+}
