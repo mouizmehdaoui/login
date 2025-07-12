@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>التحقق من البريد</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- ✅ النسخة الجديدة المضمونة من EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
   <div>
@@ -22,41 +25,41 @@
     </form>
   </div>
 
-  <!-- ✅ السكريبت تحت باش يتنفذ بعد ما الصفحة تجهز -->
-  <script type="module">
-    import emailjs from 'https://cdn.emailjs.com/dist/email.min.mjs';
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 🛠️ غيّر هذا المفتاح بمفتاحك من EmailJS
+      emailjs.init("X6Jqjy6CmWHmL8VTr");
 
-    emailjs.init("X6Jqjy6CmWHmL8VTr"); // المفتاح العمومي
+      document.getElementById('verifyForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const code = Math.floor(100000 + Math.random() * 900000);
+        localStorage.setItem("verificationCode", code);
 
-    document.getElementById('verifyForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const code = Math.floor(100000 + Math.random() * 900000);
-      localStorage.setItem("verificationCode", code);
-
-      emailjs.send("service_j7ko65b", "template_q8r1wqg", {
-        to_email: email,
-        message: `رمز التحقق الخاص بك هو: ${code}`
-      }).then(() => {
-        alert("📧 تم إرسال الرمز إلى بريدك!");
-      }, (err) => {
-        alert("❌ خطأ: " + JSON.stringify(err));
+        // أرسل الرمز عبر EmailJS
+        emailjs.send("service_j7ko65b", "template_q8r1wqg", {
+          to_email: email,
+          message: `رمز التحقق الخاص بك هو: ${code}`
+        }).then(() => {
+          alert("📧 تم إرسال الرمز إلى بريدك!");
+        }, (err) => {
+          alert("❌ فشل في الإرسال: " + JSON.stringify(err));
+        });
       });
-    });
 
-    document.getElementById('checkForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const enteredCode = document.getElementById('code').value;
-      const realCode = localStorage.getItem("verificationCode");
+      document.getElementById('checkForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const enteredCode = document.getElementById('code').value;
+        const realCode = localStorage.getItem("verificationCode");
 
-      if (enteredCode === realCode) {
-        alert("✅ تم التحقق بنجاح!");
-        window.location.href = "https://achrafmeh.github.io/games/";
-      } else {
-        alert("❌ الرمز غير صحيح!");
-      }
+        if (enteredCode === realCode) {
+          alert("✅ تم التحقق بنجاح!");
+          window.location.href = "https://achrafmeh.github.io/games/";
+        } else {
+          alert("❌ الرمز غير صحيح!");
+        }
+      });
     });
   </script>
 </body>
 </html>
-
