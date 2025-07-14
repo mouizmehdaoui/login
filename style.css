@@ -1,16 +1,18 @@
 body {
   background-image: url(red-abstract-ut0gkpj0c6meywdh.jpg);  
-  height: 100%;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-div {
-  width: 400px;
-  height: auto;
-  margin-top: 120px;
+.pp {
+  width: 90%;
+  max-width: 400px;
   border-radius: 13px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -18,12 +20,13 @@ div {
   border: 1px solid rgba(255,255,255,0.2);
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 30px 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
 
 div input {
-  width: 70%;
-  padding: 10px;
+  width: 80%;
+  padding: 12px;
   margin-bottom: 15px;
   border: none;
   border-radius: 50px;
@@ -34,16 +37,17 @@ div input {
   backdrop-filter: blur(5px);
 }
 
-.id input::placeholder {
+input::placeholder {
   color: rgba(255,255,255,0.6);
 }
 
 .card {
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .card button {
-  width: 45%;
+  width: 50%;
   padding: 10px;
   background: crimson;
   border: none;
@@ -57,4 +61,9 @@ div input {
 
 .card button:hover {
   background: darkred;
+}
+
+/* reCAPTCHA spacing */
+.g-recaptcha {
+  margin: 10px 0;
 }
