@@ -65,5 +65,5 @@ input::placeholder {
 
 /* reCAPTCHA spacing */
 .g-recaptcha {
-  margin: 10px 0;
+  margin-left: 45px;
 }
