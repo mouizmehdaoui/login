@@ -1,22 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <title>التحقق من البريد</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- ✅ النسخة الجديدة المضمونة من EmailJS -->
+  <!-- ✅ مكتبة EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <!-- ✅ مكتبة reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-  <div>
+  <div class="pp">
+    <!-- نموذج إرسال الرمز -->
     <form id="verifyForm" class="card">
       <h2>أدخل بريدك</h2>
       <input type="email" id="email" placeholder="example@email.com" required>
       <br>
+
+      <!-- ✅ reCAPTCHA هنا -->
+      <div class="g-recaptcha" data-sitekey="6Ld7vYIrAAAAABfSgPdVQ2PwedGqjIq1MAmnh9oK"></div>
+      <br>
+
       <button type="submit">أرسل الرمز</button>
     </form>
 
+    <!-- نموذج التحقق من الرمز -->
     <form id="checkForm" class="card">
       <h2>رمز التحقق</h2>
       <input type="text" id="code" placeholder="أدخل الرمز هنا" required>
@@ -27,34 +37,45 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // 🛠️ غيّر هذا المفتاح بمفتاحك من EmailJS
+      // ✅ مفتاح المستخدم من EmailJS
       emailjs.init("X6Jqjy6CmWHmL8VTr");
 
+      // إرسال الرمز
       document.getElementById('verifyForm').addEventListener('submit', function (e) {
         e.preventDefault();
+
+        const recaptchaToken = grecaptcha.getResponse();
+        if (!recaptchaToken) {
+          alert("يرجى تأكيد أنك لست روبوت 🤖");
+          return;
+        }
+
         const email = document.getElementById('email').value;
-        const code = Math.floor(100000 + Math.random() * 900000);
+        const code = Math.floor(100000 + Math.random() * 900000); // رمز عشوائي من 6 أرقام
         localStorage.setItem("verificationCode", code);
 
-        // أرسل الرمز عبر EmailJS
         emailjs.send("service_j7ko65b", "template_q8r1wqg", {
           to_email: email,
-          message: `رمز التحقق الخاص بك هو: ${code}`
+          message: `رمز التحقق الخاص بك هو: ${code}`,
+          "g-recaptcha-response": recaptchaToken
         }).then(() => {
           alert("📧 تم إرسال الرمز إلى بريدك!");
+          grecaptcha.reset(); // إعادة تفعيل reCAPTCHA
         }, (err) => {
           alert("❌ فشل في الإرسال: " + JSON.stringify(err));
         });
       });
 
+      // التحقق من الرمز المدخل
       document.getElementById('checkForm').addEventListener('submit', function (e) {
         e.preventDefault();
+
         const enteredCode = document.getElementById('code').value;
         const realCode = localStorage.getItem("verificationCode");
 
         if (enteredCode === realCode) {
           alert("✅ تم التحقق بنجاح!");
-          window.location.href = "https://achrafmeh.github.io/games/";
+          window.location.href = "https://achrafmeh.github.io/games/"; // توجيه بعد التحقق
         } else {
           alert("❌ الرمز غير صحيح!");
         }
